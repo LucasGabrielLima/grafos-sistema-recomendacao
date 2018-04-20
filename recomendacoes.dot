@@ -1,0 +1,16 @@
+graph recomendacoes{
+	joao -- "Tame Impala-Innerspeaker"
+	joao -- "The Beatles-Abbey Road"
+	joao -- "Boogarins - Manual"
+	adolfo -- "American Football - American Football"
+	adolfo -- "The Beatles - Abbey Roa"
+	adolfo -- "Antonio Adolfo - Viralata"
+	adolfo -- "Tyler, The Creator - Wolf"
+	lucas -- "Tyler, The Creator - Wolf"
+	lucas -- "Boogarins - Manual"
+	lucas -- "King Gizard and the Lizard Wizard - Nonagon Infinity"
+	pedro -- "King Gizard and the Lizard Wizard - Nonagon Infinity"
+	pedro -- "Daft Punk - Alive 2007"
+	pedro -- "Tyler, The Creator - Wolf"
+
+}
