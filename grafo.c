@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "grafo.h"
-#include "lista.h"
-#include "lista.c"
+#include "linkedlist.h"
 #include <graphviz/cgraph.h>
 
 //------------------------------------------------------------------------------
@@ -16,7 +15,7 @@ struct grafo {
   char *nome;
   int direcionado;
   int numero_vertices;
-  struct lista* listaAdjacencia; //o grafo é representado por um vetor de listas
+  List* listaAdjacencia; //o grafo é representado por um vetor de listas
 };
 
 //------------------------------------------------------------------------------
@@ -49,21 +48,20 @@ grafo le_grafo(FILE *input) {
   graph->direcionado = agisdirected(g);
   graph->numero_vertices = agnnodes(g);
 
-  //deve criar uma lista  para cada vértice no vetor de listas
-  Agnode_t *n;
-  Agedge_t *e;
-  // Create an array of adjacency lists. Size of array will be numero_vertices
-  graph->listaAdjacencia = (struct lista*) malloc(graph->numero_vertices * sizeof(struct lista));
-  // Initialize each adjacency list as empty by making head as NULL
-  int i;
-  for (i = 0; i < graph->numero_vertices; ++i)
-      graph->listaAdjacencia[i].primeiro = NULL;
+  // Create an array of adjacency lists. Size of array will be graph->numero_vertices
+  graph->listaAdjacencia = malloc(graph->numero_vertices * sizeof(List));
 
-  for (n = agfstnode(g); n; n = agnxtnode(g,n)) {
-    for (e = agfstout(g,n); e; e = agnxtout(g,e)) {
+  // Initialize each adjacency list
+  for (int i = 0; i < graph->numero_vertices; ++i)
+      graph->listaAdjacencia[i] = emptylist();
+
+  //Agnode_t *n;
+  //Agedge_t *e;
+  //for (n = agfstnode(g); n; n = agnxtnode(g,n)) {
+    //for (e = agfstout(g,n); e; e = agnxtout(g,e)) {
       //loop para percorrer cada aresta do grafo, tem que montar as listas com isso
-    }
-  }
+    //}
+  //}
   return 0;
 }
 //------------------------------------------------------------------------------

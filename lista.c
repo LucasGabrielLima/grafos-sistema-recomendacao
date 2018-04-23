@@ -14,7 +14,6 @@ struct no {
 
 struct lista {
   unsigned int tamanho;
-  //int padding; // só pra evitar warning
   no primeiro;
 };
 
