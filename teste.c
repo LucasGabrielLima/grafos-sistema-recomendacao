@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "grafo.h"
+#include "lista.h"
 
 //------------------------------------------------------------------------------
 

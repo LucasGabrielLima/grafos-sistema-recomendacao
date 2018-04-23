@@ -2,38 +2,39 @@
 #define _GRAFO_H
 
 #include <stdio.h>
+#include "lista.h"
 
 //------------------------------------------------------------------------------
 // (apontador para) estrutura de dados para representar um grafo
-// 
+//
 // o grafo tem um nome, que é uma "string"
 
 typedef struct grafo *grafo;
 
 //------------------------------------------------------------------------------
 // desaloca toda a memória usada em *g
-// 
+//
 // devolve 1 em caso de sucesso,
-//         ou 
+//         ou
 //         0, caso contrário
 
 int destroi_grafo(grafo g);
 
 //------------------------------------------------------------------------------
 // lê um grafo no formato dot de input
-// 
+//
 // devolve o grafo lido,
-//         ou 
-//         NULL, em caso de erro 
+//         ou
+//         NULL, em caso de erro
 
-grafo le_grafo(FILE *input);  
+grafo le_grafo(FILE *input);
 
 //------------------------------------------------------------------------------
 // escreve o grafo g em output usando o formato dot.
 //
 // devolve o grafo escrito,
-//         ou 
-//         NULL, em caso de erro 
+//         ou
+//         NULL, em caso de erro
 
 grafo escreve_grafo(FILE *output, grafo g);
 
