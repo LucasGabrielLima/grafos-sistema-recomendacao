@@ -50,9 +50,9 @@ grafo le_grafo(FILE *input, char *name) {
 //         ou
 //         NULL, em caso de erro
 
-grafo escreve_grafo(FILE *output, grafo g) {
-
-  return g;
+grafo escreve_grafo(FILE *output, grafo graph) {
+  agwrite(graph->g, stdout);
+  return graph;
 }
 //------------------------------------------------------------------------------
 // devolve o grafo de recomendações de g
@@ -66,8 +66,8 @@ grafo escreve_grafo(FILE *output, grafo g) {
 // conforme o vértice seja consumidor ou produto, respectivamente
 
 grafo recomendacoes(grafo g){
-
-  return g;
+  Agraph_t *recomend;
+  return recomend;
 }
 
 //------------------------------------------------------------------------------

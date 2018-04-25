@@ -1,4 +1,4 @@
-graph recomendacoes{
+graph compras{
 	adolfo -- passatempo
 	adolfo -- negrito
 	adolfo -- oreo
