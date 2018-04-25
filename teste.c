@@ -5,10 +5,11 @@
 
 int main(int argc, char const *argv[]){
 	FILE *input;
-	grafo graph;
+	grafo compras, recom;
 	input = fopen("compras.dot", "r");
-	graph = le_grafo(input, "compras");
-
-	escreve_grafo(stdout, graph);
+	compras = le_grafo(input, "compras");
+	escreve_grafo(stdout, compras);
+	recom = recomendacoes(compras);
+	escreve_grafo("recomendacoes.dot", recom);
 	return 0;
 }
