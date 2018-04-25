@@ -1,19 +1,14 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <graphviz/cgraph.h>
 #include "grafo.h"
-#include "linkedlist.h"
 
-//------------------------------------------------------------------------------
+int main(int argc, char const *argv[]){
+	FILE *input;
+	grafo graph;
+	input = fopen("recomendacoes.dot", "r");
+	graph = le_grafo(input, "compras");
 
-int main(void) {
-
-  grafo g = le_grafo(stdin);
-
-  if ( !g )
-
-    return 1;
-
-  escreve_grafo(stdout, g);
-
-  return ! destroi_grafo(g);
+	agwrite(graph->g, stdout);
+	return 0;
 }

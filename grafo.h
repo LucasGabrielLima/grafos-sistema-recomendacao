@@ -2,8 +2,6 @@
 #define _GRAFO_H
 
 #include <stdio.h>
-#include "lista.h"
-
 //------------------------------------------------------------------------------
 // (apontador para) estrutura de dados para representar um grafo
 //
@@ -27,7 +25,7 @@ int destroi_grafo(grafo g);
 //         ou
 //         NULL, em caso de erro
 
-grafo le_grafo(FILE *input);
+grafo le_grafo(FILE *input, char *nome);
 
 //------------------------------------------------------------------------------
 // escreve o grafo g em output usando o formato dot.

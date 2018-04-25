@@ -12,10 +12,7 @@
 // o grafo tem um nome, que é uma "string"
 
 struct grafo {
-  char *nome;
-  int direcionado;
-  int numero_vertices;
-  List* listaAdjacencia; //o grafo é representado por um vetor de listas
+  Agraph_t *g;
 };
 
 //------------------------------------------------------------------------------
@@ -36,33 +33,15 @@ int destroi_grafo(grafo g) {
 //         ou
 //         NULL, em caso de erro
 
-grafo le_grafo(FILE *input) {
+grafo le_grafo(FILE *input, char *name) {
   Agraph_t *g;
   grafo graph;
 
-  graph = malloc(sizeof(struct grafo));
-  g = agread(input, NULL);
-  graph->nome = (char*) malloc (sizeof(char)*strlen(agnameof(g))+1);
-  strcpy(graph->nome, agnameof(g));
-	strcat(graph->nome, "\0");
-  graph->direcionado = agisdirected(g);
-  graph->numero_vertices = agnnodes(g);
-
-  // Create an array of adjacency lists. Size of array will be graph->numero_vertices
-  graph->listaAdjacencia = malloc(graph->numero_vertices * sizeof(List));
-
-  // Initialize each adjacency list
-  for (int i = 0; i < graph->numero_vertices; ++i)
-      graph->listaAdjacencia[i] = emptylist();
-
-  //Agnode_t *n;
-  //Agedge_t *e;
-  //for (n = agfstnode(g); n; n = agnxtnode(g,n)) {
-    //for (e = agfstout(g,n); e; e = agnxtout(g,e)) {
-      //loop para percorrer cada aresta do grafo, tem que montar as listas com isso
-    //}
-  //}
-  return 0;
+  graph = malloc(sizeof (struct grafo));
+  graph->g = agread(input, NULL);
+ 
+  agwrite(graph->g, stdout);
+  return graph;
 }
 //------------------------------------------------------------------------------
 // escreve o grafo g em output usando o formato dot.
