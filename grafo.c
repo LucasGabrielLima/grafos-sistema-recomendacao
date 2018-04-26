@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "grafo.h"
 #include "linkedlist.h"
 #include <graphviz/cgraph.h>
@@ -40,7 +41,6 @@ grafo le_grafo(FILE *input, char *name) {
   graph = malloc(sizeof (struct grafo));
   graph->g = agread(input, NULL);
 
-  agwrite(graph->g, stdout);
   return graph;
 }
 //------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ grafo le_grafo(FILE *input, char *name) {
 //         NULL, em caso de erro
 
 grafo escreve_grafo(FILE *output, grafo graph) {
-  agwrite(graph->g, stdout);
+  graph = agwrite(graph->g, output);
   return graph;
 }
 //------------------------------------------------------------------------------
@@ -65,8 +65,22 @@ grafo escreve_grafo(FILE *output, grafo graph) {
 // cada vértice de g tem um atributo "tipo" cujo valor é 'c' ou 'p',
 // conforme o vértice seja consumidor ou produto, respectivamente
 
-grafo recomendacoes(grafo g){
+grafo recomendacoes(grafo compras){
   grafo recomend;
+  Agnode_t *n;
+  char *type;
+
+  for(n = agfstnode(compras->g); n; n = agnxtnode(compras->g, n)){
+    printf("aaaaaaaaaaaa");
+    type = agget(n, "tipo");
+    if(!strcmp(type, "c")){
+      printf("Tipo de %s é consumidor\n", agnameof(n));
+    }
+    else{
+      printf("Tipo de %s é produto\n", agnameof(n));
+    }
+  }
+
   return recomend;
 }
 

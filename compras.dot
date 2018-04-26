@@ -1,11 +1,11 @@
 graph compras{
-	node [type=c color=blue]
+	node [tipo=c color=blue]
 	adolfo
 	lucas
 	pedro
 	joao
 
-	node [type=p color=red]
+	node [tipo=p color=red]
 	passatempo
 	negrito
 	oreo
