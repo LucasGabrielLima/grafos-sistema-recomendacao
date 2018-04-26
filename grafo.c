@@ -39,7 +39,7 @@ grafo le_grafo(FILE *input, char *name) {
 
   graph = malloc(sizeof (struct grafo));
   graph->g = agread(input, NULL);
- 
+
   agwrite(graph->g, stdout);
   return graph;
 }
@@ -66,7 +66,7 @@ grafo escreve_grafo(FILE *output, grafo graph) {
 // conforme o vértice seja consumidor ou produto, respectivamente
 
 grafo recomendacoes(grafo g){
-  Agraph_t *recomend;
+  grafo recomend;
   return recomend;
 }
 
