@@ -35,7 +35,6 @@ int destroi_grafo(grafo g) {
 //         NULL, em caso de erro
 
 grafo le_grafo(FILE *input, char *name) {
-  Agraph_t *g;
   grafo graph;
 
   graph = malloc(sizeof (struct grafo));
@@ -71,7 +70,6 @@ grafo recomendacoes(grafo compras){
   char *type;
 
   for(n = agfstnode(compras->g); n; n = agnxtnode(compras->g, n)){
-    printf("aaaaaaaaaaaa");
     type = agget(n, "tipo");
     if(!strcmp(type, "c")){
       printf("Tipo de %s é consumidor\n", agnameof(n));

@@ -10,6 +10,6 @@ int main(int argc, char const *argv[]){
 	compras = le_grafo(input, "compras");
 	escreve_grafo(stdout, compras);
 	recom = recomendacoes(compras);
-	escreve_grafo("recomendacoes.dot", recom);
+	//escreve_grafo("recomendacoes.dot", recom);
 	return 0;
 }
