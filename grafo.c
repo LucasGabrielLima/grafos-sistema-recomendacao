@@ -33,7 +33,7 @@ int destroi_grafo(grafo g) {
 //         ou
 //         NULL, em caso de erro
 
-grafo le_grafo(FILE *input, char *name) {
+grafo le_grafo(FILE *input) {
   grafo graph;
 
   graph = malloc(sizeof (struct grafo));
@@ -66,8 +66,14 @@ grafo escreve_grafo(FILE *output, grafo graph) {
 grafo recomendacoes(grafo compras){
   grafo recomend;
   Agnode_t *consumidor, *produto, *semelhante, *recomendado;
-  Agedge_t *aresta1, *aresta2, *aresta3;
+  Agnode_t *con_recomend, *rec_recomend; //Vertices para serem usados no grafo de recomendacoes
+  Agedge_t *aresta1, *aresta2, *aresta3, *aresta_recomend;
   char *type;
+
+  //Cria grafo de recomendações vazio
+  recomend = malloc(sizeof (struct grafo));
+  recomend->g = agopen("recomendacoes", Agundirected, NULL);
+
 
   //Percorre todos os vértices
   for(consumidor = agfstnode(compras->g); consumidor; consumidor = agnxtnode(compras->g, consumidor)){
@@ -96,7 +102,7 @@ grafo recomendacoes(grafo compras){
 
           //Percorre todas as arestas saindo dos semelhantes
           for(aresta3 = agfstedge(compras->g, semelhante); aresta3; aresta3 = agnxtedge(compras->g, aresta3, semelhante)){
-            //Ve em qual ponta da aresta está o produto comprado
+            //Ve em qual ponta da aresta está o produto a ser recomendado
             if(!strcmp(agget(agtail(aresta3), "tipo"), "p")){
               recomendado = agtail(aresta3);
             }
@@ -106,8 +112,12 @@ grafo recomendacoes(grafo compras){
 
             //Se o produto recomendado já não foi comprado pelo consumidor
             if(!agedge(compras->g, consumidor, recomendado, NULL, 0)){
+              //Procura (ou cria caso não exista) os respectivos vértices no grafo de recomendacoes
+              con_recomend = agnode(recomend->g, agnameof(consumidor), 1);
+              rec_recomend = agnode(recomend->g, agnameof(recomendado), 1);
 
-              //cria aresta de consumidor -> recomendado com o peso certimnho e os caralho
+              //cria aresta de consumidor -> recomendado com o peso certinho e os caralho aquatico
+              aresta_recomend = agedge(recomend->g, con_recomend, rec_recomend, NULL, 1);
               printf("%s recomendado para %s\n", agnameof(recomendado), agnameof(consumidor));
             }
           }

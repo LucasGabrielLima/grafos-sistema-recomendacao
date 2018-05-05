@@ -1,0 +1,21 @@
+graph recomendacoes {
+	adolfo -- bono;
+	adolfo -- bono;
+	adolfo -- clubsocial;
+	adolfo -- clubsocial;
+	lucas -- clubsocial;
+	lucas -- passatempo;
+	lucas -- passatempo;
+	lucas -- calypso;
+	lucas -- calypso;
+	pedro -- bono;
+	pedro -- passatempo;
+	pedro -- calypso;
+	pedro -- calypso;
+	pedro -- negrito;
+	pedro -- negrito;
+	joao -- passatempo;
+	joao -- negrito;
+	joao -- oreo;
+	joao -- oreo;
+}

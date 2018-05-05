@@ -4,12 +4,13 @@
 #include "grafo.h"
 
 int main(int argc, char const *argv[]){
-	FILE *input;
-	grafo compras, recom;
+	FILE *input, *output;
+	grafo compras, recomend;
 	input = fopen("compras.dot", "r");
-	compras = le_grafo(input, "compras");
+	output = fopen("recomendacoes.dot", "w");
+	compras = le_grafo(input);
 	escreve_grafo(stdout, compras);
-	recom = recomendacoes(compras);
-	//escreve_grafo("recomendacoes.dot", recom);
+	recomend = recomendacoes(compras);
+	escreve_grafo(output, recomend);
 	return 0;
 }

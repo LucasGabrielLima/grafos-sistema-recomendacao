@@ -25,7 +25,7 @@ int destroi_grafo(grafo g);
 //         ou
 //         NULL, em caso de erro
 
-grafo le_grafo(FILE *input, char *nome);
+grafo le_grafo(FILE *input);
 
 //------------------------------------------------------------------------------
 // escreve o grafo g em output usando o formato dot.
