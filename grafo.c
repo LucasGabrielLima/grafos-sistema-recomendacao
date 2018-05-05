@@ -104,8 +104,12 @@ grafo recomendacoes(grafo compras){
               recomendado = aghead(aresta3);
             }
 
-            //cria aresta de consumidor -> recomendado com o peso certimnho e os caralho
-            printf("%s recomendado para %s\n", agnameof(recomendado), agnameof(consumidor));
+            //Se o produto recomendado já não foi comprado pelo consumidor
+            if(!agedge(compras->g, consumidor, recomendado, NULL, 0)){
+
+              //cria aresta de consumidor -> recomendado com o peso certimnho e os caralho
+              printf("%s recomendado para %s\n", agnameof(recomendado), agnameof(consumidor));
+            }
           }
         }
       }
