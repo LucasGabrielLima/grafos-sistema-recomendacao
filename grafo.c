@@ -66,18 +66,52 @@ grafo escreve_grafo(FILE *output, grafo graph) {
 
 grafo recomendacoes(grafo compras){
   grafo recomend;
-  Agnode_t *n;
+  Agnode_t *consumidor, *produto, *semelhante, *recomendado;
+  Agedge_t *aresta1, *aresta2, *aresta3;
   char *type;
 
-  for(n = agfstnode(compras->g); n; n = agnxtnode(compras->g, n)){
-    type = agget(n, "tipo");
+  //Percorre todos os vértices
+  for(consumidor = agfstnode(compras->g); consumidor; consumidor = agnxtnode(compras->g, consumidor)){
+    type = agget(consumidor, "tipo");
+    //Se for consumidor
     if(!strcmp(type, "c")){
-      printf("Tipo de %s é consumidor\n", agnameof(n));
-    }
-    else{
-      printf("Tipo de %s é produto\n", agnameof(n));
+      //Percorre todas as arestas saindo dos consumidores
+      for(aresta1 = agfstedge(compras->g, consumidor); aresta1; aresta1 = agnxtedge(compras->g, aresta1, consumidor)){
+        //Ve em qual ponta da aresta está o produto comprado
+        if(!strcmp(agget(agtail(aresta1)), "p")){
+          produto = agtail(aresta1);
+        }
+        else{
+          produto = aghead(aresta1);
+        }
+
+        //Percorre todas as arestas saindo dos produtos comprados
+        for(aresta2 = agfstedge(compras->g, produto); aresta2; aresta2 = agnxtedge(compras->g, aresta2, produto{
+          //Ve em qual ponta da aresta está o consumidor que também comprou o produto (o semelhante)
+          if(!strcmp(agget(agtail(aresta2)), "c")){
+            semelhante = agtail(aresta2);
+          }
+          else{
+            semelhante = aghead(aresta2);
+          }
+
+          //Percorre todas as arestas saindo dos semelhantes
+          for(aresta3 = agfstedge(compras->g, semelhante); aresta3; aresta3 = agnxtedge(compras->g, aresta3, semelhante)){
+            //Ve em qual ponta da aresta está o produto comprado
+            if(!strcmp(agget(agtail(aresta3)), "p")){
+              recomendado = agtail(aresta3);
+            }
+            else{
+              recomendado = aghead(aresta3);
+            }
+
+            //cria aresta de consumidor -> recomendado com o peso certimnho e os caralho
+          }
+        }
+      }
     }
   }
+
 
   return recomend;
 }
