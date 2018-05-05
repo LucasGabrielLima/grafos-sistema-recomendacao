@@ -25,7 +25,7 @@ struct grafo {
 int destroi_grafo(grafo g) {
   agclose(g->g);
   free(g);
-  return 1;
+  return !g;
 }
 //------------------------------------------------------------------------------
 // lê um grafo no formato dot de input
@@ -72,12 +72,14 @@ grafo recomendacoes(grafo compras){
   Agnode_t *consumidor, *produto, *semelhante, *recomendado;
   Agnode_t *con_recomend, *rec_recomend; //Vertices para serem usados no grafo de recomendacoes
   Agedge_t *aresta1, *aresta2, *aresta3, *aresta_recomend;
-  char *type, nome_aresta[50];
+  char *type, nome_aresta[50], *weight_str;
+  int weight;
 
   //Cria grafo de recomendações vazio
   recomend = malloc(sizeof (struct grafo));
   recomend->g = agopen("recomendacoes", Agundirected, NULL);
-
+  //Seta peso default como 0
+  agattr(recomend->g, AGEDGE, "weight", "0");
 
   //Percorre todos os vértices
   for(consumidor = agfstnode(compras->g); consumidor; consumidor = agnxtnode(compras->g, consumidor)){
@@ -123,7 +125,14 @@ grafo recomendacoes(grafo compras){
               //cria aresta de consumidor -> recomendado com o peso certinho e os caralho aquatico
               snprintf(nome_aresta, 50, "%s%s", agnameof(consumidor), agnameof(recomendado));
               aresta_recomend = agedge(recomend->g, con_recomend, rec_recomend, nome_aresta, 1);
-              printf("%s recomendado para %s\n", agnameof(recomendado), agnameof(consumidor));
+              printf("%s recomendou %s para %s\n", agnameof(semelhante), agnameof(recomendado), agnameof(consumidor));
+
+              //Incrementa peso da aresta
+              weight_str = agget(aresta_recomend, "weight");
+              weight = atoi(weight_str);
+              weight++;
+              snprintf(weight_str, 10, "%d", weight);
+              agset(aresta_recomend, "weight", weight_str);
             }
           }
         }
