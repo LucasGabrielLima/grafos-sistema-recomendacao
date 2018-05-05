@@ -72,7 +72,7 @@ grafo recomendacoes(grafo compras){
   Agnode_t *consumidor, *produto, *semelhante, *recomendado;
   Agnode_t *con_recomend, *rec_recomend; //Vertices para serem usados no grafo de recomendacoes
   Agedge_t *aresta1, *aresta2, *aresta3, *aresta_recomend;
-  char *type;
+  char *type, nome[50];
 
   //Cria grafo de recomendações vazio
   recomend = malloc(sizeof (struct grafo));
@@ -121,7 +121,8 @@ grafo recomendacoes(grafo compras){
               rec_recomend = agnode(recomend->g, agnameof(recomendado), 1);
 
               //cria aresta de consumidor -> recomendado com o peso certinho e os caralho aquatico
-              aresta_recomend = agedge(recomend->g, con_recomend, rec_recomend, NULL, 1);
+              sprintf(nome, "%s%s", agnameof(consumidor), agnameof(recomendado));
+              aresta_recomend = agedge(recomend->g, con_recomend, rec_recomend, nome, 1);
               printf("%s recomendado para %s\n", agnameof(recomendado), agnameof(consumidor));
             }
           }
