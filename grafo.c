@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "grafo.h"
-#include "linkedlist.h"
 #include <graphviz/cgraph.h>
 
 //------------------------------------------------------------------------------
@@ -78,7 +77,7 @@ grafo recomendacoes(grafo compras){
       //Percorre todas as arestas saindo dos consumidores
       for(aresta1 = agfstedge(compras->g, consumidor); aresta1; aresta1 = agnxtedge(compras->g, aresta1, consumidor)){
         //Ve em qual ponta da aresta está o produto comprado
-        if(!strcmp(agget(agtail(aresta1)), "p")){
+        if(!strcmp(agget(agtail(aresta1), "tipo"), "p")){
           produto = agtail(aresta1);
         }
         else{
@@ -86,9 +85,9 @@ grafo recomendacoes(grafo compras){
         }
 
         //Percorre todas as arestas saindo dos produtos comprados
-        for(aresta2 = agfstedge(compras->g, produto); aresta2; aresta2 = agnxtedge(compras->g, aresta2, produto{
+        for(aresta2 = agfstedge(compras->g, produto); aresta2; aresta2 = agnxtedge(compras->g, aresta2, produto)){
           //Ve em qual ponta da aresta está o consumidor que também comprou o produto (o semelhante)
-          if(!strcmp(agget(agtail(aresta2)), "c")){
+          if(!strcmp(agget(agtail(aresta2), "tipo"), "c")){
             semelhante = agtail(aresta2);
           }
           else{
@@ -98,7 +97,7 @@ grafo recomendacoes(grafo compras){
           //Percorre todas as arestas saindo dos semelhantes
           for(aresta3 = agfstedge(compras->g, semelhante); aresta3; aresta3 = agnxtedge(compras->g, aresta3, semelhante)){
             //Ve em qual ponta da aresta está o produto comprado
-            if(!strcmp(agget(agtail(aresta3)), "p")){
+            if(!strcmp(agget(agtail(aresta3), "tipo"), "p")){
               recomendado = agtail(aresta3);
             }
             else{
@@ -106,6 +105,7 @@ grafo recomendacoes(grafo compras){
             }
 
             //cria aresta de consumidor -> recomendado com o peso certimnho e os caralho
+            printf("%s recomendado para %s\n", agnameof(recomendado), agnameof(consumidor));
           }
         }
       }
