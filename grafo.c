@@ -69,17 +69,22 @@ grafo escreve_grafo(FILE *output, grafo graph) {
 
 grafo recomendacoes(grafo compras){
   grafo recomend;
+  grafo consumidores; //Grafo para registrar as recomendações de um consumidor para outro (usado para garantir que não haja recomendações duplicadas)
   Agnode_t *consumidor, *produto, *semelhante, *recomendado;
-  Agnode_t *con_recomend, *rec_recomend; //Vertices para serem usados no grafo de recomendacoes
-  Agedge_t *aresta1, *aresta2, *aresta3, *aresta_recomend;
-  char *type, nome_aresta[50], *weight_str;
+  Agnode_t *con_recomend, *rec_recomend, *con_consumidores, *sem_consumidores; //Vertices para serem usados no grafo de recomendacoes e de consumidores
+  Agedge_t *aresta1, *aresta2, *aresta3, *aresta_recomend, *aresta_consumidores;
+  char *type, nome_aresta[50], nome_aresta_con[50], *weight_str;
   int weight;
 
   //Cria grafo de recomendações vazio
-  recomend = malloc(sizeof (struct grafo));
+  recomend = malloc(sizeof(struct grafo));
   recomend->g = agopen("recomendacoes", Agundirected, NULL);
   //Seta peso default como 0
   agattr(recomend->g, AGEDGE, "weight", "0");
+
+  //Cria grafo de consumidores vazio
+  consumidores = malloc(sizeof(struct grafo));
+  consumidores->g = agopen("consumidores", Agundirected, NULL);
 
   //Percorre todos os vértices
   for(consumidor = agfstnode(compras->g); consumidor; consumidor = agnxtnode(compras->g, consumidor)){
@@ -118,21 +123,33 @@ grafo recomendacoes(grafo compras){
 
             //Se o produto recomendado já não foi comprado pelo consumidor
             if(!agedge(compras->g, consumidor, recomendado, NULL, 0)){
-              //Procura (ou cria caso não exista) os respectivos vértices no grafo de recomendacoes
-              con_recomend = agnode(recomend->g, agnameof(consumidor), 1);
-              rec_recomend = agnode(recomend->g, agnameof(recomendado), 1);
+              //Procura (ou cria caso não exista) os respectivos vértices no grafo de consumidores
+              con_consumidores = agnode(consumidores->g, agnameof(consumidor), 1);
+              sem_consumidores = agnode(consumidores->g, agnameof(semelhante), 1);
+              //Cria aresta de recomendacao entre os consumidores
+              snprintf(nome_aresta_con, 50, "%s", agnameof(recomendado));
 
-              //cria aresta de consumidor -> recomendado com o peso certinho e os caralho aquatico
-              snprintf(nome_aresta, 50, "%s%s", agnameof(consumidor), agnameof(recomendado));
-              aresta_recomend = agedge(recomend->g, con_recomend, rec_recomend, nome_aresta, 1);
-              printf("%s recomendou %s para %s\n", agnameof(semelhante), agnameof(recomendado), agnameof(consumidor));
+              //Ve se o produto já não foi recomendado para o consumidor pelo mesmo semelhante
+              if(!agedge(consumidores->g, con_consumidores, sem_consumidores, nome_aresta_con, 0)){
+                //Caso a recomendação nao exista ainda, cria aresta no grafo consumidores
+                aresta_consumidores = agedge(consumidores->g, con_consumidores, sem_consumidores, nome_aresta_con, 1);
 
-              //Incrementa peso da aresta
-              weight_str = agget(aresta_recomend, "weight");
-              weight = atoi(weight_str);
-              weight++;
-              snprintf(weight_str, 10, "%d", weight);
-              agset(aresta_recomend, "weight", weight_str);
+                //Procura (ou cria caso não exista) os respectivos vértices no grafo de recomendacoes
+                con_recomend = agnode(recomend->g, agnameof(consumidor), 1);
+                rec_recomend = agnode(recomend->g, agnameof(recomendado), 1);
+
+                //cria aresta de consumidor -> recomendado com o peso certinho e os caralho aquatico
+                snprintf(nome_aresta, 50, "%s%s", agnameof(consumidor), agnameof(recomendado));
+                aresta_recomend = agedge(recomend->g, con_recomend, rec_recomend, nome_aresta, 1);
+                printf("%s recomendou %s para %s\n", agnameof(semelhante), agnameof(recomendado), agnameof(consumidor));
+
+                //Incrementa peso da aresta
+                weight_str = agget(aresta_recomend, "weight");
+                weight = atoi(weight_str);
+                weight++;
+                snprintf(weight_str, 10, "%d", weight);
+                agset(aresta_recomend, "weight", weight_str);
+              }
             }
           }
         }
