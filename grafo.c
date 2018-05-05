@@ -23,8 +23,9 @@ struct grafo {
 //         0, caso contrário
 
 int destroi_grafo(grafo g) {
-
-  return 0;
+  agclose(g->g);
+  free(g);
+  return 1;
 }
 //------------------------------------------------------------------------------
 // lê um grafo no formato dot de input
@@ -37,6 +38,9 @@ grafo le_grafo(FILE *input) {
   grafo graph;
 
   graph = malloc(sizeof (struct grafo));
+  if(!graph)
+    return NULL;
+
   graph->g = agread(input, NULL);
 
   return graph;

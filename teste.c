@@ -12,5 +12,7 @@ int main(int argc, char const *argv[]){
 	escreve_grafo(stdout, compras);
 	recomend = recomendacoes(compras);
 	escreve_grafo(output, recomend);
+	destroi_grafo(compras);
+	destroi_grafo(recomend);
 	return 0;
 }
