@@ -6,10 +6,16 @@
 int main(int argc, char const *argv[]){
 	FILE *input, *output;
 	grafo compras, recomend;
-	input = fopen("compras.dot", "r");
+
+	if(argc < 2){
+		printf("Erro: especifique um arquivo de entrada no formato .dot\n");
+		exit(1);
+	}
+	else{
+		input = fopen(argv[1], "r");
+	}
 	output = fopen("recomendacoes.dot", "w");
 	compras = le_grafo(input);
-	escreve_grafo(stdout, compras);
 	recomend = recomendacoes(compras);
 	escreve_grafo(output, recomend);
 	destroi_grafo(compras);
