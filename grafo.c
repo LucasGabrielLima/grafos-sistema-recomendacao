@@ -4,8 +4,6 @@
 #include "grafo.h"
 #include <graphviz/cgraph.h>
 
-#define STR_WGHT "weight"
-
 //------------------------------------------------------------------------------
 // (apontador para) estrutura de dados para representar um grafo
 //
@@ -74,7 +72,7 @@ grafo recomendacoes(grafo compras){
   grafo consumidores; //Grafo para registrar as recomendações de um consumidor para outro (usado para garantir que não haja recomendações duplicadas)
   Agnode_t *consumidor, *produto, *semelhante, *recomendado;
   Agnode_t *con_recomend, *rec_recomend, *con_consumidores, *sem_consumidores; //Vertices para serem usados no grafo de recomendacoes e de consumidores
-  Agedge_t *aresta1, *aresta2, *aresta3, *aresta_recomend, *aresta_consumidores;
+  Agedge_t *aresta1, *aresta2, *aresta3, *aresta_recomend;
   char *type, nome_aresta[50], nome_aresta_con[50], *weight_str;
   int weight;
 
@@ -134,7 +132,7 @@ grafo recomendacoes(grafo compras){
               //Ve se o produto já não foi recomendado para o consumidor pelo mesmo semelhante
               if(!agedge(consumidores->g, con_consumidores, sem_consumidores, nome_aresta_con, 0)){
                 //Caso a recomendação nao exista ainda, cria aresta no grafo consumidores
-                aresta_consumidores = agedge(consumidores->g, con_consumidores, sem_consumidores, nome_aresta_con, 1);
+                agedge(consumidores->g, con_consumidores, sem_consumidores, nome_aresta_con, 1);
 
                 //Procura (ou cria caso não exista) os respectivos vértices no grafo de recomendacoes
                 con_recomend = agnode(recomend->g, agnameof(consumidor), 1);
@@ -146,15 +144,15 @@ grafo recomendacoes(grafo compras){
                 printf("%s recomendou %s para %s\n", agnameof(semelhante), agnameof(recomendado), agnameof(consumidor));
 
                 //Incrementa peso da aresta
-                weight_str = agget(aresta_recomend, STR_WGHT);
+                weight_str = agget(aresta_recomend, "weight");
                 weight = atoi(weight_str);
                 weight++;
                 weight_str = (char *) malloc(10 * sizeof(char));
                 snprintf(weight_str, 10, "%d", weight);
-                agset(aresta_recomend, STR_WGHT, weight_str);
+                agset(aresta_recomend, "weight", weight_str);
                 free(weight_str);
                 agattr(recomend->g, AGEDGE, "weight", "0");
-                printf("peso %s = %s\n\n",agnameof(aresta_recomend), agget(aresta_recomend, STR_WGHT));
+                printf("peso %s = %s\n\n",agnameof(aresta_recomend), agget(aresta_recomend, "weight"));
               }
             }
           }
